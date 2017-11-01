@@ -1,14 +1,9 @@
-<%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html> <!--  default is HTML5 -->
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
-</head>
-	<body>
-		Welcome ${name}, your password is ${password} <br/>
-		Now, you can <a href="/list-todos?">manage your TODOs</a>
-	</body>
-</html>
+<%@ include file="common/header.jspf" %>
+<%@ include file="common/navigation.jspf" %>
+
+<div class="container">
+	<h4>Welcome ${name}</h4>
+	<br/>
+	<p>Now, you can <a href="/list-todos?">manage your TODOs</a></p>
+</div>
+<%@ include file="common/footer.jspf" %>

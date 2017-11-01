@@ -34,15 +34,15 @@ public class TodoController { //this is spring mvc controller. it will handle we
 	
 	@RequestMapping(value = "/list-todos", method = RequestMethod.GET) 
 	public String showAllTodos(ModelMap model) {
-		String userName = (String) model.get("name");
-		model.addAttribute("todos", todoService.retrieveTodos(userName));
+		//String userName = (String) model.get("name");
+		model.addAttribute("todos", todoService.retrieveTodos(retrieveLoggedUsername()));
 		
 		return "list-todos";
 	}
-	
+
 	@RequestMapping(value = "/add-todo", method = RequestMethod.GET) 
 	public String showTodoPage(ModelMap model) {
-		model.addAttribute("todo", new Todo(0, "Alisa", "nodesc", new Date(), false));
+		model.addAttribute("todo", new Todo());
 		return "todo"; //redirect to todo.jsp
 	}
 	
@@ -54,7 +54,7 @@ public class TodoController { //this is spring mvc controller. it will handle we
 			return "todo"; //return user to todo page is there are any issues, prevent from adding new todo
 		}
 		
-		todoService.addTodo("Alisa", todo.getDesc(), new Date(), false);
+		todoService.addTodo(retrieveLoggedUsername(), todo.getDesc(), new Date(), false);
 		model.clear(); //it will not pass any params as url - we just do not need those params in this case as we are returning back
 		return "redirect:/list-todos"; //re-execute /list-todos link. that way we don't need to add params to Model again
 	}
@@ -77,7 +77,7 @@ public class TodoController { //this is spring mvc controller. it will handle we
 			return "todo"; //return user to todo page is there are any issues
 		}
 		
-		todo.setUser("Alisa"); //(String) model.get("user")); 
+		todo.setUser(retrieveLoggedUsername()); //(String) model.get("user")); 
 		todoService.updateTodo(todo);
 		
 		model.clear(); //to prevent request parameter "name" to be passed
@@ -90,6 +90,10 @@ public class TodoController { //this is spring mvc controller. it will handle we
 		todoService.deleteTodo(id);
 		model.clear();
 		return "redirect:/list-todos";
+	}
+	
+	private String retrieveLoggedUsername() {
+		return "Alisa";
 	}
 	
 }
